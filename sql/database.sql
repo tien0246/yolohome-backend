@@ -12,7 +12,8 @@ CREATE TABLE User (
 
 CREATE TABLE Device (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
+    Feed_id VARCHAR(255) UNIQUE NOT NULL,
+    user_id INT NULL,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
@@ -24,15 +25,15 @@ CREATE TABLE Device (
 
 CREATE TABLE User_Log (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
-    device_id INT,
+    user_id INT NOT NULL,
+    device_id INT NOT NULL,
     action VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Sensor_Data (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    device_id INT,
+    device_id INT NOT NULL,
     value FLOAT NOT NULL,
     alert BOOLEAN NOT NULL DEFAULT FALSE,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -40,7 +41,7 @@ CREATE TABLE Sensor_Data (
 
 CREATE TABLE Status (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    device_id INT,
+    device_id INT NOT NULL,
     type ENUM('active', 'inactive', 'error', 'maintenance') NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
