@@ -31,7 +31,7 @@ def check_alert_in_recent_5(device_id: int, user=Depends(get_current_user)):
     last5 = SensorService().get_all_sensor_data(device_id, 5)
     return any(rec.alert for rec in last5)
 
-@router.get("/sensors/time-range", response_model=List[SensorDataOutSchema])
+@router.get("/sensor/time-range", response_model=List[SensorDataOutSchema])
 def get_sensors_in_time_range(device_id: int, start: int, end: int, user=Depends(get_current_user)):
     dev = DeviceService().get_device_by_id(device_id)
     if not dev or dev.user_id != user.id:
