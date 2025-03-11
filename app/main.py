@@ -21,6 +21,13 @@ async def lifespan(app: FastAPI):
     mqtt_service.stop()
     thread.join()
 
+app = FastAPI(
+    title="YoloHome API",
+    description="API cho hệ thống nhà thông minh YoloHome.",
+    docs_url="/docs",
+    lifespan=lifespan
+)
+
 app = FastAPI(lifespan=lifespan)
 app.include_router(auth_route.router, prefix="/auth", tags=["auth"])
 app.include_router(device_route.router, prefix="/api", tags=["device"])
