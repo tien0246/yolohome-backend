@@ -10,10 +10,13 @@ def disconnected(client):
     sys.exit(1)
 
 def message(client, feed_id, payload):
+    print(payload)
     try:
         data = json.loads(payload)
+        if not isinstance(data, dict):
+            data = {"feed_id": feed_id, "value": float(data)}
         SensorSubject().notify(data)
-    except:
+    except Exception:
         SensorSubject().notify({"feed_id": feed_id, "value": float(payload)})
 
 def get_mqtt_client():
