@@ -9,11 +9,12 @@ class SensorDataOutSchema(BaseModel):
     value: float
     alert: bool
     timestamp: int
-    class Config:
-        from_attributes = True
 
-    @field_validator("timestamp", "before", False)
+    @field_validator("timestamp", mode="before", check_fields=False)
     def convert_timestamp(cls, v):
         if isinstance(v, datetime):
             return int(v.timestamp())
         return v
+
+    class Config:
+        from_attributes = True
