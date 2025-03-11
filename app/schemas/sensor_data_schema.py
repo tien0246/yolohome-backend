@@ -8,7 +8,7 @@ class SensorDataInSchema(BaseModel):
 class SensorDataOutSchema(BaseModel):
     value: float
     alert: bool
-    timestamp: datetime
+    timestamp: int
     class Config:
         from_attributes = True
 
