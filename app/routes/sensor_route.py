@@ -24,7 +24,7 @@ def get_sensor_data(device_id: Optional[int] = None, limit: int = Query(100, ge=
     return SensorService().get_all_sensor_data(device_id, limit)
 
 @router.get("/sensor/check-alert", response_model=bool)
-def check_alert_in_recent_5(device_id: int, user=Depends(get_current_user)):
+def check_alert(device_id: int, user=Depends(get_current_user)):
     dev = DeviceService().get_device_by_id(device_id)
     if not dev or dev.user_id != user.id:
         raise HTTPException(status_code=403, detail="Unauthorized")

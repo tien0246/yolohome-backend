@@ -28,7 +28,6 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-app = FastAPI(lifespan=lifespan)
 app.include_router(auth_route.router, prefix="/auth", tags=["auth"])
 app.include_router(device_route.router, prefix="/api", tags=["device"])
 app.include_router(sensor_route.router, prefix="/api", tags=["sensor"])
