@@ -19,4 +19,4 @@ class DeviceOutSchema(BaseModel):
     min_value: float
     max_value: float
     class Config:
-        orm_mode = True
+        from_attributes = True

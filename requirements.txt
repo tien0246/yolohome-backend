@@ -8,3 +8,4 @@ pymysql
 adafruit-io
 python-dotenv
 setuptools
+python-multipart
