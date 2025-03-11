@@ -12,7 +12,6 @@ def disconnected(client):
 def message(client, feed_id, payload):
     try:
         data = json.loads(payload)
-        print(feed_id, data["key"], data["data"])
         if isinstance(data, dict) and data["key"] == feed_id:
             data = {"feed_id": feed_id, "value": data["data"]["value"]}
             SensorSubject().notify(data)
