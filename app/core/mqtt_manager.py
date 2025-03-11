@@ -10,14 +10,13 @@ def disconnected(client):
     sys.exit(1)
 
 def message(client, feed_id, payload):
-    print({"feed_id": feed_id, "value": payload})
     try:
         data = json.loads(payload)
-        if not isinstance(data, dict):
-            data = {"feed_id": feed_id, "value": float(data)}
-        SensorSubject().notify(data)
+        if isinstance(data, dict):
+            data = {"feed_id": data["value"]["key"], "value": data["value"]["data"]["value"]}
+            SensorSubject().notify(data)
     except Exception:
-        SensorSubject().notify({"feed_id": feed_id, "value": float(payload)})
+        print("Invalid data")
 
 def get_mqtt_client():
     c = MQTTClient(config.aio_username, config.aio_key)
