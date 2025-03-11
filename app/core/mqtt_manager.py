@@ -12,8 +12,9 @@ def disconnected(client):
 def message(client, feed_id, payload):
     try:
         data = json.loads(payload)
-        if isinstance(data, dict):
-            data = {"feed_id": data["value"]["key"], "value": data["value"]["data"]["value"]}
+        print(data)
+        if isinstance(data, dict) and data["key"] == feed_id:
+            data = {"feed_id": feed_id, "value": data["data"]["value"]}
             SensorSubject().notify(data)
     except Exception:
         print("Invalid data")
