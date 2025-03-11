@@ -13,3 +13,12 @@ class Device(Base):
     max_value = Column(Float, nullable=False)
     create_at = Column(TIMESTAMP, server_default=func.current_timestamp())
     update_at = Column(TIMESTAMP, server_default=func.current_timestamp(), onupdate=func.current_timestamp())
+
+    def __init__(self, feed_id, user_id, name, type, location, min_value, max_value):
+        self.feed_id = feed_id
+        self.user_id = user_id
+        self.name = name
+        self.type = type
+        self.location = location
+        self.min_value = min_value
+        self.max_value = max_value

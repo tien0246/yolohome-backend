@@ -11,6 +11,6 @@ class SensorSubject(ISubject):
         self._observers.append(observer)
     def detach(self, observer):
         self._observers.remove(observer)
-    def notify(self, data: dict):
+    def notify(self, data):
         for o in self._observers:
             o.update(data)

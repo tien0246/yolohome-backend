@@ -5,14 +5,15 @@ from app.schemas.user_schema import UserCreateSchema
 class UserService:
     def create_user(self, u: UserCreateSchema):
         db = SessionLocal()
-        user = User(name=u.name, email=u.email, password=u.password)
-        db.add(user)
+        usr = User(u.name, u.email, u.password)
+        db.add(usr)
         db.commit()
-        db.refresh(user)
+        db.refresh(usr)
         db.close()
-        return user
-    def get_by_email(self, email: str):
+        return usr
+    
+    def get_by_email(self, email):
         db = SessionLocal()
-        user = db.query(User).filter(User.email==email).first()
+        usr = db.query(User).filter(User.email==email).first()
         db.close()
-        return user
+        return usr

@@ -7,18 +7,16 @@ from app.services.user_service import UserService
 
 router = APIRouter()
 
-@router.post("/register", response_model=UserOutSchema)
-def register(user: UserCreateSchema):
-    s = UserService()
-    existing = s.get_by_email(user.email)
-    if existing:
+@router.post("/signup", response_model=UserOutSchema)
+def signup(user: UserCreateSchema):
+    svc = UserService()
+    if svc.get_by_email(user.email):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email exists")
-    return s.create_user(user)
+    return svc.create_user(user)
 
-@router.post("/login", response_model=TokenSchema)
-def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    a = AuthService()
-    token = a.login(form_data.username, form_data.password)
+@router.post("/signin", response_model=TokenSchema)
+def signin(form_data: OAuth2PasswordRequestForm = Depends()):
+    token = AuthService().login(form_data.username, form_data.password)
     if not token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     return {"access_token": token, "token_type": "bearer"}

@@ -9,3 +9,8 @@ class User(Base):
     password = Column(String(255), nullable=False)
     create_at = Column(TIMESTAMP, server_default=func.current_timestamp())
     update_at = Column(TIMESTAMP, server_default=func.current_timestamp(), onupdate=func.current_timestamp())
+
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password

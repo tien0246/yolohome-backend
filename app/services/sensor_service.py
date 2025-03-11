@@ -1,13 +1,31 @@
 from app.db.session import SessionLocal
 from app.models.sensor_data import SensorData
 from app.schemas.sensor_data_schema import SensorDataInSchema
+from datetime import datetime
 
 class SensorService:
     def record_sensor_data(self, data: SensorDataInSchema):
         db = SessionLocal()
-        record = SensorData(device_id=data.device_id, value=data.value)
-        db.add(record)
+        rec = SensorData(data.device_id, data.value)
+        db.add(rec)
         db.commit()
-        db.refresh(record)
+        db.refresh(rec)
         db.close()
-        return record
+        return rec
+    
+    def get_all_sensor_data(self, device_id, limit):
+        db = SessionLocal()
+        q = db.query(SensorData).order_by(SensorData.id.desc())
+        if device_id:
+            q = q.filter(SensorData.device_id==device_id)
+        q = q.limit(limit)
+        recs = q.all()
+        db.close()
+        return recs
+    
+    def get_by_time_range(self, device_id, start, end):
+        db = SessionLocal()
+        q = db.query(SensorData).filter(SensorData.timestamp>=start, SensorData.timestamp<=end, SensorData.device_id==device_id).order_by(SensorData.timestamp.desc())
+        recs = q.all()
+        db.close()
+        return recs

@@ -4,14 +4,14 @@ from app.models.device import Device
 from app.models.sensor_data import SensorData
 
 class StoreObserver(IObserver):
-    def update(self, data: dict):
+    def update(self, data):
         session = SessionLocal()
         try:
             feed_id = data.get("feed_id")
-            value = data.get("value")
+            val = data.get("value")
             device = session.query(Device).filter(Device.feed_id==feed_id).first()
-            if device and value is not None:
-                record = SensorData(device_id=device.id, value=value)
+            if device and val is not None:
+                record = SensorData(device.id, val)
                 session.add(record)
                 session.commit()
         finally:

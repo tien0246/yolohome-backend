@@ -2,7 +2,6 @@ from pydantic import BaseModel
 
 class DeviceCreateSchema(BaseModel):
     feed_id: str
-    user_id: int = None
     name: str
     type: str
     location: str
@@ -12,7 +11,7 @@ class DeviceCreateSchema(BaseModel):
 class DeviceOutSchema(BaseModel):
     id: int
     feed_id: str
-    user_id: int = None
+    user_id: int
     name: str
     type: str
     location: str

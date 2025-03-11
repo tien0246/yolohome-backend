@@ -9,11 +9,8 @@ from app.observers.store_observer import StoreObserver
 from app.observers.threshold_observer import ThresholdObserver
 
 Base.metadata.create_all(bind=engine)
-
-store_observer = StoreObserver()
-threshold_observer = ThresholdObserver()
-SensorSubject().attach(store_observer)
-SensorSubject().attach(threshold_observer)
+store_observer = SensorSubject().attach(StoreObserver())
+SensorSubject().attach(ThresholdObserver())
 mqtt_service = MQTTService()
 
 @asynccontextmanager

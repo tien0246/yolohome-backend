@@ -1,8 +1,7 @@
-import sys
+import sys, json
 from Adafruit_IO import MQTTClient
 from app.utils.config import config
 from app.observers.sensor_subject import SensorSubject
-import json
 
 def connected(client):
     client.subscribe("#")
@@ -11,7 +10,6 @@ def disconnected(client):
     sys.exit(1)
 
 def message(client, feed_id, payload):
-    print(f"Feed ID: {feed_id}, Payload: {payload}")
     try:
         data = json.loads(payload)
         SensorSubject().notify(data)

@@ -8,5 +8,5 @@ class ISubject(ABC):
     def detach(self, observer):
         pass
     @abstractmethod
-    def notify(self, data: dict):
+    def notify(self, data):
         pass
