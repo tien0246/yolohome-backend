@@ -10,7 +10,7 @@ def disconnected(client):
     sys.exit(1)
 
 def message(client, feed_id, payload):
-    print(payload)
+    print({"feed_id": feed_id, "value": payload})
     try:
         data = json.loads(payload)
         if not isinstance(data, dict):
