@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from datetime import datetime
 
 class SensorDataInSchema(BaseModel):
@@ -6,10 +6,14 @@ class SensorDataInSchema(BaseModel):
     value: float
 
 class SensorDataOutSchema(BaseModel):
-    id: int
-    device_id: int
     value: float
     alert: bool
     timestamp: datetime
     class Config:
         from_attributes = True
+
+    @field_validator("timestamp", "before")
+    def convert_timestamp(cls, v):
+        if isinstance(v, datetime):
+            return int(v.timestamp())
+        return v
