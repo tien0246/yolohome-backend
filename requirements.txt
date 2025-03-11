@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic-settings>=2.0
+pika
+pyjwt
+pymysql
+adafruit-io
+python-dotenv
+setuptools
