@@ -9,6 +9,7 @@ class SensorSubject(ISubject):
         return cls._instance
     def attach(self, observer):
         self._observers.append(observer)
+        return self
     def detach(self, observer):
         self._observers.remove(observer)
     def notify(self, data):

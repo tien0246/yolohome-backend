@@ -6,6 +6,7 @@ class UserCreateSchema(BaseModel):
     password: str
 
 class UserOutSchema(BaseModel):
+    id: str
     name: str
     email: str
     class Config:

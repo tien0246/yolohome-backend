@@ -9,6 +9,8 @@ class DeviceCreateSchema(BaseModel):
     max_value: float
 
 class DeviceOutSchema(BaseModel):
+    id: str
+    user_id: str | None
     name: str
     type: str
     location: str

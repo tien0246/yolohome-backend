@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS YoloHome;
 USE YoloHome;
 
 CREATE TABLE User (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id CHAR(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -11,9 +11,9 @@ CREATE TABLE User (
 );
 
 CREATE TABLE Device (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id CHAR(36) PRIMARY KEY,
     feed_id VARCHAR(255) UNIQUE NOT NULL,
-    user_id INT NULL,
+    user_id CHAR(36) NULL,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
@@ -24,24 +24,24 @@ CREATE TABLE Device (
 );
 
 CREATE TABLE User_Log (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    device_id INT NOT NULL,
+    id CHAR(36) PRIMARY KEY,
+    user_id CHAR(36) NOT NULL,
+    device_id CHAR(36) NOT NULL,
     action VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Sensor_Data (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    device_id INT NOT NULL,
+    id CHAR(36) PRIMARY KEY,
+    device_id CHAR(36) NOT NULL,
     value FLOAT NOT NULL,
     alert BOOLEAN NOT NULL DEFAULT FALSE,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Status (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    device_id INT NOT NULL,
+    id CHAR(36) PRIMARY KEY,
+    device_id CHAR(36) NOT NULL,
     type ENUM('active', 'inactive', 'error', 'maintenance') NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -58,3 +58,52 @@ ADD CONSTRAINT fk_sensor_device FOREIGN KEY (device_id) REFERENCES Device(id) ON
 
 ALTER TABLE Status 
 ADD CONSTRAINT fk_status_device FOREIGN KEY (device_id) REFERENCES Device(id) ON DELETE CASCADE;
+
+DELIMITER $$
+
+CREATE TRIGGER before_insert_user
+BEFORE INSERT ON User
+FOR EACH ROW
+BEGIN
+    IF NEW.id IS NULL THEN
+        SET NEW.id = UUID();
+    END IF;
+END$$
+
+CREATE TRIGGER before_insert_device
+BEFORE INSERT ON Device
+FOR EACH ROW
+BEGIN
+    IF NEW.id IS NULL THEN
+        SET NEW.id = UUID();
+    END IF;
+END$$
+
+CREATE TRIGGER before_insert_user_log
+BEFORE INSERT ON User_Log
+FOR EACH ROW
+BEGIN
+    IF NEW.id IS NULL THEN
+        SET NEW.id = UUID();
+    END IF;
+END$$
+
+CREATE TRIGGER before_insert_sensor_data
+BEFORE INSERT ON Sensor_Data
+FOR EACH ROW
+BEGIN
+    IF NEW.id IS NULL THEN
+        SET NEW.id = UUID();
+    END IF;
+END$$
+
+CREATE TRIGGER before_insert_status
+BEFORE INSERT ON Status
+FOR EACH ROW
+BEGIN
+    IF NEW.id IS NULL THEN
+        SET NEW.id = UUID();
+    END IF;
+END$$
+
+DELIMITER ;
