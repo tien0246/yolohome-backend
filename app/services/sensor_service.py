@@ -2,6 +2,7 @@ from app.db.session import SessionLocal
 from app.models.sensor_data import SensorData
 from app.schemas.sensor_data_schema import SensorDataInSchema
 
+
 class SensorService:
     def record_sensor_data(self, data: SensorDataInSchema):
         db = SessionLocal()
