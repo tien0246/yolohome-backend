@@ -1,3 +1,6 @@
+# import sys
+# sys.tracebacklimit = 0
+
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import threading
