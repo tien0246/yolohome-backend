@@ -1,14 +1,14 @@
 from app.core.mqtt_manager import get_mqtt_client
+from app.utils.config import config
 
 class MQTTService:
     def __init__(self):
         self.client = get_mqtt_client()
     def start(self):
-        self.client.on_connect()
+        self.client.connect()
         self.client.loop_background()
     def stop(self):
-        self.client.on_disconnect()
+        self.client.disconnect()
     def publish(self, feed_id, data):
         print(f"Publishing to {feed_id}: {data}")
-        feed = self.client.feeds(feed_id)
-        self.client.send_data(feed.key, data)
+        self.client.publish(feed_id, str(data), config.aio_username)

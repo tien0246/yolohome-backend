@@ -1,5 +1,5 @@
 import sys, json
-from Adafruit_IO import Client
+from Adafruit_IO import MQTTClient
 from app.utils.config import config
 from app.observers.sensor_subject import SensorSubject
 
@@ -19,7 +19,7 @@ def message(client, feed_id, payload):
         pass
 
 def get_mqtt_client():
-    c = Client(config.aio_username, config.aio_key)
+    c = MQTTClient(config.aio_username, config.aio_key)
     c.on_connect = connected
     c.on_disconnect = disconnected
     c.on_message = message
