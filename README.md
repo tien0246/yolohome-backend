@@ -1,7 +1,9 @@
 ## Tasks
 
-1. **Fix Alert Database**  
+0. **Add update function for devices and handle UserLog**
 
-2. **Test Alert with Frontend**  
+1. **Fix alert database**  
 
-3. **Add Comments to All Functions**  
+2. **Test alert with frontend**  
+
+3. **Add comments to all functions**  
