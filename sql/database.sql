@@ -65,45 +65,35 @@ CREATE TRIGGER before_insert_user
 BEFORE INSERT ON User
 FOR EACH ROW
 BEGIN
-    IF NEW.id IS NULL THEN
-        SET NEW.id = UUID();
-    END IF;
+    SET NEW.id = UUID();
 END$$
 
 CREATE TRIGGER before_insert_device
 BEFORE INSERT ON Device
 FOR EACH ROW
 BEGIN
-    IF NEW.id IS NULL THEN
-        SET NEW.id = UUID();
-    END IF;
+    SET NEW.id = UUID();
 END$$
 
 CREATE TRIGGER before_insert_user_log
 BEFORE INSERT ON User_Log
 FOR EACH ROW
 BEGIN
-    IF NEW.id IS NULL THEN
-        SET NEW.id = UUID();
-    END IF;
+    SET NEW.id = UUID();
 END$$
 
 CREATE TRIGGER before_insert_sensor_data
 BEFORE INSERT ON Sensor_Data
 FOR EACH ROW
 BEGIN
-    IF NEW.id IS NULL THEN
-        SET NEW.id = UUID();
-    END IF;
+    SET NEW.id = UUID();
 END$$
 
 CREATE TRIGGER before_insert_status
 BEFORE INSERT ON Status
 FOR EACH ROW
 BEGIN
-    IF NEW.id IS NULL THEN
-        SET NEW.id = UUID();
-    END IF;
+    SET NEW.id = UUID();
 END$$
 
 DELIMITER ;
