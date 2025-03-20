@@ -7,7 +7,7 @@ class MQTTService:
         self.client.on_connect()
         self.client.loop_background()
     def stop(self):
-        self.client.disconnect()
+        self.client.on_disconnect()
     def publish(self, feed_id, data):
         print(f"Publishing to {feed_id}: {data}")
         feed = self.client.feeds(feed_id)
