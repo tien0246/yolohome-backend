@@ -6,4 +6,6 @@
 
 2. **Test alert with frontend**  
 
-3. **Add comments to all functions**  
+3. **Fix auth token**
+
+4. **Add comments to all functions**  
