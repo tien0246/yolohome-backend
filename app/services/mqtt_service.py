@@ -8,5 +8,4 @@ class MQTTService:
     def stop(self):
         self.client.disconnect()
     def publish(self, feed_id, data):
-        print(f"Publishing {data} to {feed_id}.")
         self.client.publish(feed_id, data)

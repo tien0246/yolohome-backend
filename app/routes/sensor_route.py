@@ -5,7 +5,6 @@ from app.schemas.sensor_data_schema import SensorDataInSchema, SensorDataOutSche
 from app.services.sensor_service import SensorService
 from app.services.device_service import DeviceService
 from app.services.auth_service import get_current_user
-from app.core.mqtt_instance import mqtt_service
 router = APIRouter()
 
 @router.get("/sensor", response_model=List[SensorDataOutSchema])
@@ -37,5 +36,4 @@ def create_sensor_data(data: SensorDataInSchema, user=Depends(get_current_user))
     dev = DeviceService().get_device_by_id(data.device_id)
     if not dev or dev.user_id != user.id:
         raise HTTPException(403, "Unauthorized")
-    mqtt_service.publish(dev.feed_id, data.value)
-    return SensorService().record_sensor_data(data)
+    return SensorService().record_sensor_data(data, dev.feed_id)
