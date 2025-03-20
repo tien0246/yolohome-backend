@@ -11,4 +11,4 @@ class MQTTService:
         self.client.disconnect()
     def publish(self, feed_id, data):
         print(f"Publishing to {feed_id}: {data}")
-        self.client.publish(feed_id=feed_id, value=data)
+        self.client.publish('temp', '30')
