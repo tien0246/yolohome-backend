@@ -5,8 +5,7 @@ from app.schemas.sensor_data_schema import SensorDataInSchema, SensorDataOutSche
 from app.services.sensor_service import SensorService
 from app.services.device_service import DeviceService
 from app.services.auth_service import get_current_user
-from app.main import mqtt_service
-
+from app.core.mqtt_instance import mqtt_service
 router = APIRouter()
 
 @router.get("/sensor", response_model=List[SensorDataOutSchema])

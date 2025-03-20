@@ -3,15 +3,14 @@ from contextlib import asynccontextmanager
 import threading
 from app.db.session import Base, engine
 from app.routes import auth_route, device_route, sensor_route
-from app.services.mqtt_service import MQTTService
+from app.core.mqtt_instance import mqtt_service
 from app.observers.sensor_subject import SensorSubject
 from app.observers.store_observer import StoreObserver
 from app.observers.threshold_observer import ThresholdObserver
 
 Base.metadata.create_all(bind=engine)
-store_observer = SensorSubject().attach(StoreObserver())
+SensorSubject().attach(StoreObserver())
 SensorSubject().attach(ThresholdObserver())
-mqtt_service = MQTTService()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
