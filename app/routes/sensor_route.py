@@ -38,5 +38,5 @@ def create_sensor_data(data: SensorDataInSchema, user=Depends(get_current_user))
     dev = DeviceService().get_device_by_id(data.device_id)
     if not dev or dev.user_id != user.id:
         raise HTTPException(403, "Unauthorized")
-    MQTTService().publish(dev.feed_id, data.value)
+    MQTTService().publishh(dev.feed_id, data.value)
     return SensorService().record_sensor_data(data)

@@ -9,6 +9,6 @@ class MQTTService:
         self.client.loop_background()
     def stop(self):
         self.client.disconnect()
-    def publish(self, feed_id, data):
+    def publishh(self, feed_id, data):
         print(f"Publishing to {feed_id}: {data}")
-        self.client.publish(feed_id, str(data), config.aio_username)
+        self.client.publish(feed_id, data)
