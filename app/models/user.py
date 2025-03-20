@@ -3,7 +3,7 @@ from app.db.session import Base
 
 class User(Base):
     __tablename__ = "User"
-    id = Column(String(36), primary_key=True, index=True, nullable=True)
+    id = Column(String(36), primary_key=True, index=True, nullable=True, default=text("uuid()"))
     name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False, index=True)
     password = Column(String(255), nullable=False)
