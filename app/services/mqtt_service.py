@@ -4,7 +4,7 @@ class MQTTService:
     def __init__(self):
         self.client = get_mqtt_client()
     def start(self):
-        self.client.connect()
+        self.client.on_connect()
         self.client.loop_background()
     def stop(self):
         self.client.disconnect()
