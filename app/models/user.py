@@ -1,9 +1,9 @@
-from sqlalchemy import Column, String, TIMESTAMP, func
+from sqlalchemy import Column, String, TIMESTAMP, func, text
 from app.db.session import Base
 
 class User(Base):
     __tablename__ = "User"
-    id = Column(String(36), primary_key=True, index=True)
+    id = Column(String(36), primary_key=True, index=True, server_default=text("UUID()"))
     name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False, index=True)
     password = Column(String(255), nullable=False)
