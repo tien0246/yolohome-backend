@@ -1,10 +1,11 @@
 from app.db.session import SessionLocal
 from app.models.sensor_data import SensorData
 from app.schemas.sensor_data_schema import SensorDataInSchema
-from datetime import datetime
+from app.core.mqtt_instance import mqtt_service
 
 class SensorService:
-    def record_sensor_data(self, data: SensorDataInSchema):
+    def record_sensor_data(self, data: SensorDataInSchema, feed_id):
+        mqtt_service.publish(feed_id, data.value)
         db = SessionLocal()
         rec = SensorData(data.device_id, data.value)
         db.add(rec)
