@@ -19,7 +19,6 @@ def message(client, feed_id, payload):
         pass
 
 def get_mqtt_client():
-    print("Creating MQTT client")
     c = MQTTClient(config.aio_username, config.aio_key)
     c.on_connect = connected
     c.on_disconnect = disconnected
