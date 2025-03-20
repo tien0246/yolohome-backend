@@ -4,7 +4,7 @@ from app.utils.config import config
 from app.observers.sensor_subject import SensorSubject
 
 def connected(client):
-    client.subscribe('temp')
+    client.subscribe("temp")
 
 def disconnected(client):
     sys.exit(1)
