@@ -1,9 +1,10 @@
 from sqlalchemy import Column, String, Float, Boolean, TIMESTAMP, func, ForeignKey
 from app.db.session import Base
+import uuid
 
 class SensorData(Base):
     __tablename__ = "Sensor_Data"
-    id = Column(String(36), primary_key=True, index=True)
+    id = Column(String(36), primary_key=True, index=True, default=uuid.uuid4)
     device_id = Column(String(36), ForeignKey("Device.id"), nullable=False)
     value = Column(Float, nullable=False)
     alert = Column(Boolean, default=False)

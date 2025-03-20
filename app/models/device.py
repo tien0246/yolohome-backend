@@ -1,9 +1,10 @@
 from sqlalchemy import Column, String, Float, TIMESTAMP, func, ForeignKey
 from app.db.session import Base
+import uuid
 
 class Device(Base):
     __tablename__ = "Device"
-    id = Column(String(36), primary_key=True, index=True)
+    id = Column(String(36), primary_key=True, index=True, default=uuid.uuid4)
     feed_id = Column(String(255), unique=True, nullable=False, index=True)
     user_id = Column(String(36), ForeignKey("User.id"), nullable=True)
     name = Column(String(255), nullable=False)
