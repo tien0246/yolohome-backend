@@ -18,13 +18,9 @@ def message(client, feed_id, payload):
     except Exception:
         pass
 
-def publish(client, feed_id, data):
-    print(f"Publishing to {feed_id}: {data}")
-
 def get_mqtt_client():
     c = MQTTClient(config.aio_username, config.aio_key)
     c.on_connect = connected
     c.on_disconnect = disconnected
     c.on_message = message
-    c.on_publish = publish
     return c
