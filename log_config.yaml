@@ -3,19 +3,11 @@ formatters:
   default:
     format: "[%(asctime)s] [%(levelname)s] %(message)s"
     datefmt: "%Y-%m-%d %H:%M:%S"
-  access:
-    format: "[%(asctime)s] [%(levelname)s] %(client_addr)s - '%(request_line)s' %(status_code)s"
-    datefmt: "%Y-%m-%d %H:%M:%S"
 
 handlers:
   default:
     class: logging.StreamHandler
     formatter: default
-    stream: ext://sys.stdout
-
-  access:
-    class: logging.StreamHandler
-    formatter: access
     stream: ext://sys.stdout
 
 loggers:
@@ -24,8 +16,9 @@ loggers:
     level: INFO
 
   uvicorn.error:
+    handlers: [default]
     level: INFO
 
   uvicorn.access:
-    handlers: [access]
+    handlers: [default]
     level: INFO
