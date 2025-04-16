@@ -8,6 +8,13 @@ class DeviceService:
     def create_device(self, d: DeviceCreateSchema, user_id):
         db = SessionLocal()
         dev = Device(d.feed_id, user_id, d.name, d.type, d.location, d.min_value, d.max_value)
+        existing_device = db.query(Device).filter(Device.feed_id==d.feed_id, Device.user_id==user_id).first()
+        if existing_device:
+            db.close()
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "Device already exists")
+        log = UserLog(user_id=user_id, device_id=dev.id, action="create device")
+        
+        db.add(log)
         db.add(dev)
         db.commit()
         db.refresh(dev)
