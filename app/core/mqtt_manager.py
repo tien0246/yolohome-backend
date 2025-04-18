@@ -20,13 +20,7 @@ def message(client, feed_id, payload):
             data = {"feed_id": feed_id, "value": data["data"]["value"]}
             SensorSubject().notify(data)
     except Exception:
-        session = SessionLocal()
-        try:
-            device = session.query(Device).filter(Device.feed_id == feed_id).first()
-            if device:
-                StatusService().create_status_direct(device.id, StatusEnum.error)
-        finally:
-            session.close()
+        pass
 
 def get_mqtt_client():
     c = MQTTClient(config.aio_username, config.aio_key)
