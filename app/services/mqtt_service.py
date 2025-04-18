@@ -9,5 +9,5 @@ class MQTTService:
         self.client.disconnect()
     def publish(self, feed_id, data):
         with published_lock:
-            published_internal.add((feed_id, data))
+            published_internal.add((feed_id, str(data)))
         self.client.publish(feed_id, data)

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Float, TIMESTAMP, func, ForeignKey
+from sqlalchemy import Column, String, TIMESTAMP, func, ForeignKey, Numeric
 from app.db.session import Base
 import uuid
 
@@ -10,8 +10,8 @@ class Device(Base):
     name = Column(String(255), nullable=False)
     type = Column(String(255), nullable=False)
     location = Column(String(255), nullable=False)
-    min_value = Column(Float, nullable=False)
-    max_value = Column(Float, nullable=False)
+    min_value = Column(Numeric, nullable=False)
+    max_value = Column(Numeric, nullable=False)
     create_at = Column(TIMESTAMP, server_default=func.current_timestamp())
     update_at = Column(TIMESTAMP, server_default=func.current_timestamp(), onupdate=func.current_timestamp())
 
