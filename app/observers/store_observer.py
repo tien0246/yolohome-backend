@@ -12,15 +12,10 @@ class StoreObserver(IObserver):
             feed_id = data.get("feed_id")
             val = data.get("value")
             device = session.query(Device).filter(Device.feed_id==feed_id).first()
-            if not device:
-                return
-            if val is None:
-                StatusService().create_status_direct(device.id, StatusEnum.error)
-                return
-
-            record = SensorData(device.id, val)
-            session.add(record)
-            session.commit()
-            StatusService().create_status_direct(device.id, StatusEnum.active)
+            if device and val is not None:
+                record = SensorData(device.id, val)
+                session.add(record)
+                session.commit()
+                StatusService().create_status_direct(device.id, StatusEnum.active)
         finally:
             session.close()
