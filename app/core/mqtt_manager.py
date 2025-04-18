@@ -10,6 +10,12 @@ def disconnected(client):
     sys.exit(1)
 
 def message(client, feed_id, payload):
+    if isinstance(payload, bytes):
+        payload = payload.decode()
+
+    if payload.endswith("|internal"):
+        return
+
     try:
         data = json.loads(payload)
         if isinstance(data, dict) and data["key"] == feed_id:
