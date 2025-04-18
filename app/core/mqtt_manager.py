@@ -2,10 +2,6 @@ import sys, json
 from Adafruit_IO import MQTTClient
 from app.utils.config import config
 from app.observers.sensor_subject import SensorSubject
-from app.services.status_service import StatusService
-from app.models.status import StatusEnum
-from app.db.session import SessionLocal
-from app.models.device import Device
 
 def connected(client):
     client.subscribe("#")
