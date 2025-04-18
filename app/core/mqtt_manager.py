@@ -2,6 +2,10 @@ import sys, json
 from Adafruit_IO import MQTTClient
 from app.utils.config import config
 from app.observers.sensor_subject import SensorSubject
+from app.services.status_service import StatusService
+from app.models.status import StatusEnum
+from app.db.session import SessionLocal
+from app.models.device import Device
 
 def connected(client):
     client.subscribe("#")
@@ -16,7 +20,13 @@ def message(client, feed_id, payload):
             data = {"feed_id": feed_id, "value": data["data"]["value"]}
             SensorSubject().notify(data)
     except Exception:
-        pass
+        session = SessionLocal()
+        try:
+            device = session.query(Device).filter(Device.feed_id == feed_id).first()
+            if device:
+                StatusService().create_status_direct(device.id, StatusEnum.error)
+        finally:
+            session.close()
 
 def get_mqtt_client():
     c = MQTTClient(config.aio_username, config.aio_key)

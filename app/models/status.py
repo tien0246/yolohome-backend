@@ -15,3 +15,7 @@ class Status(Base):
     device_id = Column(String(36), ForeignKey("Device.id"), nullable=False)
     type = Column(Enum(StatusEnum), nullable=False)
     timestamp = Column(TIMESTAMP, server_default=func.current_timestamp())
+
+    def __init__(self, device_id, type):
+        self.device_id = device_id
+        self.type = type

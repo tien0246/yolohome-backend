@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import threading
 from app.db.session import Base, engine
-from app.routes import auth_route, device_route, sensor_route
+from app.routes import auth_route, device_route, sensor_route, status_route
 from app.core.mqtt_instance import mqtt_service
 from app.observers.sensor_subject import SensorSubject
 from app.observers.store_observer import StoreObserver
@@ -33,3 +33,4 @@ app = FastAPI(
 app.include_router(auth_route.router, prefix="/auth", tags=["auth"])
 app.include_router(device_route.router, prefix="/api", tags=["device"])
 app.include_router(sensor_route.router, prefix="/api", tags=["sensor"])
+app.include_router(status_route.router, prefix="/api", tags=["status"])
