@@ -19,6 +19,6 @@ class ThresholdObserver(IObserver):
                     if rec:
                         rec.alert = True
                         s.commit()
-                    self.alert_service.send_alert(dev.user_id, f"Device {dev.name} out of range: {val}")
+                    self.alert_service.send_alert(dev.user_id, f"{dev.name}: {val}")
         finally:
             s.close()

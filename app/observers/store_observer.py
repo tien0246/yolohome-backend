@@ -10,7 +10,7 @@ class StoreObserver(IObserver):
         session = SessionLocal()
         try:
             feed_id = data.get("feed_id")
-            val = float(data.get("value"))
+            val = data.get("value")
             device = session.query(Device).filter(Device.feed_id==feed_id).first()
             if device and val is not None:
                 record = SensorData(device.id, val)
