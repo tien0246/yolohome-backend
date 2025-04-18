@@ -13,7 +13,7 @@ class StoreObserver(IObserver):
             val = data.get("value")
             device = session.query(Device).filter(Device.feed_id==feed_id).first()
             if device and val is not None:
-                record = SensorData(device.id, val)
+                record = SensorData(device.id, val, (device.min_value <= val <= device.max_value))
                 session.add(record)
                 session.commit()
                 StatusService().create_status_direct(device.id, StatusEnum.active)
