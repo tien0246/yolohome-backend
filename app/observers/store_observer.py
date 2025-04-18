@@ -13,6 +13,8 @@ class StoreObserver(IObserver):
             val = float(data.get("value"))
             device = session.query(Device).filter(Device.feed_id==feed_id).first()
             if device and val is not None:
+                print(device.min_value)
+                print(device.max_value)
                 record = SensorData(device.id, val, (val < device.min_value or val > device.max_value))
                 session.add(record)
                 session.commit()
