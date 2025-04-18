@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Float, Boolean, TIMESTAMP, func, ForeignKey
+from sqlalchemy import Column, String, Boolean, TIMESTAMP, func, ForeignKey, Numeric
 from app.db.session import Base
 import uuid
 
@@ -6,7 +6,7 @@ class SensorData(Base):
     __tablename__ = "Sensor_Data"
     id = Column(String(36), primary_key=True, index=True, default=uuid.uuid4)
     device_id = Column(String(36), ForeignKey("Device.id"), nullable=False)
-    value = Column(Float, nullable=False)
+    value = Column(Numeric, nullable=False)
     alert = Column(Boolean, default=False)
     timestamp = Column(TIMESTAMP, server_default=func.current_timestamp())
 
