@@ -1,5 +1,4 @@
-from app.core.mqtt_manager import get_mqtt_client
-from app.core.mqtt_instance import published_internal, published_lock
+from app.core.mqtt_manager import *
 class MQTTService:
     def __init__(self):
         self.client = get_mqtt_client()

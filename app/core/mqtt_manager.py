@@ -2,7 +2,10 @@ import sys, json
 from Adafruit_IO import MQTTClient
 from app.utils.config import config
 from app.observers.sensor_subject import SensorSubject
-from app.core.mqtt_instance import published_internal, published_lock
+from threading import Lock
+
+published_internal = set()
+published_lock = Lock()
 
 def connected(client):
     client.subscribe("#")
