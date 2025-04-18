@@ -18,7 +18,7 @@ def message(client, feed_id, payload):
         data = json.loads(payload)
         if isinstance(data, dict) and data["key"] == feed_id:
             with published_lock:
-                if (feed_id, data["data"]["value"]) in published_internal:
+                if (feed_id, float(data["data"]["value"]))in published_internal:
                     published_internal.remove((feed_id, data["data"]["value"]))
                     return
             data = {"feed_id": feed_id, "value": data["data"]["value"]}
