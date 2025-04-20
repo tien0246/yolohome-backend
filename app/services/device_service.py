@@ -12,10 +12,12 @@ class DeviceService:
         if existing_device:
             db.close()
             raise HTTPException(status.HTTP_400_BAD_REQUEST, "Device already exists")
-        log = UserLog(user_id=user_id, device_id=dev.id, action="create device")
-        
-        db.add(log)
         db.add(dev)
+        db.flush()
+
+        log = UserLog(user_id=user_id, device_id=dev.id, action="create device")
+        db.add(log)
+        
         db.commit()
         db.refresh(dev)
         db.close()
