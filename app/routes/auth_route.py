@@ -11,12 +11,12 @@ router = APIRouter()
 def signup(user: UserCreateSchema):
     svc = UserService()
     if svc.get_by_email(user.email):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email exists")
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Email exists")
     return svc.create_user(user)
 
 @router.post("/signin", response_model=TokenSchema)
 def signin(form_data: OAuth2PasswordRequestForm = Depends()):
     token = AuthService().login(form_data.username, form_data.password)
     if not token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Invalid credentials")
     return {"access_token": token, "token_type": "bearer"}

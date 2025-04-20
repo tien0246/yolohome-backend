@@ -1,4 +1,4 @@
-from app.core.mqtt_manager import get_mqtt_client
+from app.core.mqtt_manager import *
 class MQTTService:
     def __init__(self):
         self.client = get_mqtt_client()
@@ -8,4 +8,6 @@ class MQTTService:
     def stop(self):
         self.client.disconnect()
     def publish(self, feed_id, data):
+        with published_lock:
+            published_internal.add((feed_id, str(data)))
         self.client.publish(feed_id, data)

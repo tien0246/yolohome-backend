@@ -13,6 +13,7 @@ class SensorService:
         db.refresh(rec)
         db.close()
         return rec
+    
     def get_all_sensor_data(self, device_id, limit):
         db = SessionLocal()
         q = db.query(SensorData).order_by(SensorData.id.desc())
@@ -22,6 +23,7 @@ class SensorService:
         recs = q.all()
         db.close()
         return recs
+    
     def get_by_time_range(self, device_id, start, end):
         db = SessionLocal()
         q = db.query(SensorData).filter(SensorData.device_id==device_id, SensorData.timestamp>=start, SensorData.timestamp<=end).order_by(SensorData.timestamp.desc())

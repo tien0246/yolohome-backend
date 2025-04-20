@@ -8,17 +8,17 @@ class ThresholdObserver(IObserver):
     def __init__(self):
         self.alert_service = AlertService()
     def update(self, data):
-        session = SessionLocal()
+        s = SessionLocal()
         try:
-            fid = data.get("feed_id")
-            val = data.get("value")
-            device = session.query(Device).filter(Device.feed_id==fid).first()
-            if device and val is not None:
-                if val < device.min_value or val > device.max_value:
-                    rec = session.query(SensorData).order_by(SensorData.id.desc()).first()
+            feed_id = data.get("feed_id")
+            val = float(data.get("value"))
+            dev = s.query(Device).filter(Device.feed_id==feed_id).first()
+            if dev and val is not None:
+                if val < dev.min_value or val > dev.max_value:
+                    rec = s.query(SensorData).filter(SensorData.device_id == dev.id).order_by(SensorData.timestamp.desc()).first()
                     if rec:
                         rec.alert = True
-                        session.commit()
-                    self.alert_service.send_alert(device.user_id, f"Device {device.name} out of range: {val}")
+                        s.commit()
+                    self.alert_service.send_alert(dev.user_id, f"{dev.name}: {val}")
         finally:
-            session.close()
+            s.close()

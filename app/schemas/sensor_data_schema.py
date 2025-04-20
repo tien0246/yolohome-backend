@@ -1,14 +1,15 @@
+from typing import Union
 from pydantic import BaseModel, field_validator
 from datetime import datetime
 
 class SensorDataInSchema(BaseModel):
     device_id: str
-    value: float
+    value: Union[int, float]
 
 class SensorDataOutSchema(BaseModel):
     id: str
     device_id: str
-    value: float
+    value: Union[int, float]
     alert: bool
     timestamp: int
 
