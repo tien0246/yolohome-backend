@@ -11,11 +11,6 @@ Yolo:Home là một hệ thống nhà thông minh tích hợp công nghệ AIoT 
 - Cảnh báo khi vượt ngưỡng giá trị cho phép
 - Điều khiển thiết bị từ xa qua API
 - Ghi nhận và hiển thị dữ liệu lịch sử
-- Xác thực và phân quyền truy cập
-- Hỗ trợ observer pattern và SOLID
-- MQTT real-time client (Adafruit IO)
-- RabbitMQ cho hệ thống cảnh báo
-- Mã hóa mật khẩu với bcrypt
 
 ## Kiến trúc
 
@@ -76,12 +71,12 @@ RABBITMQ_URL=amqp://guest:guest@localhost/
 
 ### 3. Tạo cơ sở dữ liệu
 
-Sử dụng file SQL đã cung cấp (`schema.sql`) chứa toàn bộ bảng.
+Sử dụng file SQL đã cung cấp [database.sql](sql/database.sql) chứa toàn bộ bảng.
 
 ### 4. Khởi chạy FastAPI
 
 ```
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --log-config log_config.yaml
+uvicorn app.main:app --host 0.0.0.0 --port 80 --reload --log-config log_config.yaml
 ```
 
 Hoặc chạy nền
