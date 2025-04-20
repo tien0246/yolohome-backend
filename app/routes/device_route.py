@@ -20,3 +20,8 @@ def create_device(d: DeviceCreateSchema, user=Depends(get_current_user)):
 @router.patch("/device/{device_id}", response_model=DeviceOutSchema)
 def update_device(device_id: str, d: DeviceUpdateSchema, user=Depends(get_current_user)):
     return DeviceService().update_device(device_id, d, user)
+
+@router.delete("/device/{device_id}")
+def delete_device(device_id: str, user=Depends(get_current_user)):
+    DeviceService().delete_device(device_id, user)
+    return {"detail": "Device deleted"}

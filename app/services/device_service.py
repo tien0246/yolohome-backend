@@ -17,7 +17,7 @@ class DeviceService:
 
         log = UserLog(user_id=user_id, device_id=dev.id, action="create device")
         db.add(log)
-        
+
         db.commit()
         db.refresh(dev)
         db.close()
@@ -62,3 +62,19 @@ class DeviceService:
         db.refresh(dev)
         db.close()
         return dev
+    
+    def delete_device(self, device_id, user):
+        db = SessionLocal()
+        dev = db.query(Device).filter(Device.id == device_id).first()
+        if not dev:
+            db.close()
+            raise HTTPException(status_code=404, detail="Device not found")
+        if dev.user_id != user.id:
+            db.close()
+            raise HTTPException(status_code=403, detail="Unauthorized")
+
+        log = UserLog(user_id=user.id, device_id=dev.id, action="delete device")
+        db.add(log)
+        db.delete(dev)
+        db.commit()
+        db.close()
