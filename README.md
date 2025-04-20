@@ -100,11 +100,11 @@ nohup uvicorn app.main:app --host 0.0.0.0 --port 80 --reload --log-config log_co
 
 Tất cả các API yêu cầu JWT thông qua `Authorization: Bearer <token>`.
 
-## Mở rộng
+## Frontend
 
-- Nhận dạng khuôn mặt
-- Tích hợp trợ lý giọng nói
-- Giao diện mobile
+Dự án giao diện người dùng (frontend) được xây dựng riêng và có thể được kết nối trực tiếp với backend thông qua các API đã cung cấp.
+
+Repository: [https://github.com/HANND04/yolohome](https://github.com/HANND04/yolohome)
 
 ## Liên hệ
 
