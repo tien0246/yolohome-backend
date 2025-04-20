@@ -21,7 +21,6 @@ def create_device(d: DeviceCreateSchema, user=Depends(get_current_user)):
 def update_device(device_id: str, d: DeviceUpdateSchema, user=Depends(get_current_user)):
     return DeviceService().update_device(device_id, d, user)
 
-@router.delete("/device/{device_id}")
+@router.delete("/device/{device_id}", status_code=204)
 def delete_device(device_id: str, user=Depends(get_current_user)):
     DeviceService().delete_device(device_id, user)
-    return {"detail": "Device deleted"}

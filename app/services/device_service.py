@@ -68,10 +68,10 @@ class DeviceService:
         dev = db.query(Device).filter(Device.id == device_id).first()
         if not dev:
             db.close()
-            raise HTTPException(status_code=404, detail="Device not found")
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "Device not found")
         if dev.user_id != user.id:
             db.close()
-            raise HTTPException(status_code=403, detail="Unauthorized")
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "Unauthorized")
 
         log = UserLog(user_id=user.id, device_id=dev.id, action="delete device")
         db.add(log)

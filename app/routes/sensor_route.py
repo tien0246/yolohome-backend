@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from typing import List, Optional
 from datetime import datetime
 from app.schemas.sensor_data_schema import SensorDataInSchema, SensorDataOutSchema
@@ -12,14 +12,14 @@ def get_sensor_data(device_id: Optional[str] = None, limit: int = Query(100, ge=
     if device_id:
         dev = DeviceService().get_device_by_id(device_id)
         if not dev or dev.user_id != user.id:
-            raise HTTPException(403, "Unauthorized")
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "Unauthorized")
     return SensorService().get_all_sensor_data(device_id, limit)
 
 @router.get("/sensor/check-alert", response_model=bool)
 def check_alert(device_id: str, user=Depends(get_current_user)):
     dev = DeviceService().get_device_by_id(device_id)
     if not dev or dev.user_id != user.id:
-        raise HTTPException(403, "Unauthorized")
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Unauthorized")
     last5 = SensorService().get_all_sensor_data(device_id, 5)
     return any(r.alert for r in last5)
 
@@ -27,7 +27,7 @@ def check_alert(device_id: str, user=Depends(get_current_user)):
 def get_sensors_in_time_range(device_id: str, start: int, end: Optional[int] = None, user=Depends(get_current_user)):
     dev = DeviceService().get_device_by_id(device_id)
     if not dev or dev.user_id != user.id:
-        raise HTTPException(403, "Unauthorized")
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Unauthorized")
     end_dt = datetime.fromtimestamp(end) if end else datetime.utcnow()
     return SensorService().get_by_time_range(device_id, datetime.fromtimestamp(start), end_dt)
 
@@ -35,5 +35,5 @@ def get_sensors_in_time_range(device_id: str, start: int, end: Optional[int] = N
 def create_sensor_data(data: SensorDataInSchema, user=Depends(get_current_user)):
     dev = DeviceService().get_device_by_id(data.device_id)
     if not dev or dev.user_id != user.id:
-        raise HTTPException(403, "Unauthorized")
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Unauthorized")
     return SensorService().record_sensor_data(data, dev.feed_id)
