@@ -12,7 +12,7 @@ CREATE TABLE User (
 
 CREATE TABLE Device (
     id CHAR(36) PRIMARY KEY,
-    feed_id VARCHAR(255) NOT NULL,
+    feed_id VARCHAR(255) UNIQUE NOT NULL,
     user_id CHAR(36) NULL,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
