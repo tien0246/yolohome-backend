@@ -6,6 +6,6 @@
 
 ~2. **Test alert with frontend**~
 
-3. **Fix passwork hash**
+~3. **Fix passwork hash**~
 
-4. **Add comments to all functions**
+DONE!!!
