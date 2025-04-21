@@ -14,7 +14,7 @@ Yolo:Home là một hệ thống nhà thông minh tích hợp công nghệ AIoT 
 
 ## Kiến trúc
 
-- **Ngôn ngữ:** Python 3.9+
+- **Ngôn ngữ:** Python 3.10+
 - **Framework:** FastAPI
 - **Giao tiếp thời gian thực:** MQTT (Adafruit IO)
 - **Queue xử lý song song:** RabbitMQ (Pika)
