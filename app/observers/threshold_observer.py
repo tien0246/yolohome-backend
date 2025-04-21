@@ -23,7 +23,7 @@ class ThresholdObserver(IObserver):
                     user = s.query(User).filter(User.id == dev.user_id).first()
                     if user and user.token:
                         self.notifier.send(
-                            user.expo_push_token,
+                            user.expo_token,
                             title=f"Alert: {dev.name}",
                             body=f"Sensor {dev.name} has exceeded the threshold at {val}",
                             data={"device_id": dev.id, "value": val}

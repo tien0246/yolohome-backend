@@ -13,9 +13,9 @@ class NotificationService:
             ticket.validate_response()
         except DeviceNotRegisteredError:
             s = SessionLocal()
-            user = s.query(User).filter(User.expo_push_token == token).first()
+            user = s.query(User).filter(User.expo_token == token).first()
             if user:
-                user.expo_push_token = None
+                user.expo_token = None
                 s.commit()
             s.close()
         except Exception as e:
