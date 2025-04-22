@@ -16,7 +16,7 @@ class SensorService:
     
     def get_all_sensor_data(self, device_id, limit):
         db = SessionLocal()
-        q = db.query(SensorData).order_by(SensorData.id.desc())
+        q = db.query(SensorData).order_by(SensorData.timestamp.desc())
         if device_id:
             q = q.filter(SensorData.device_id==device_id)
         q = q.limit(limit)
