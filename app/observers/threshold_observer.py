@@ -14,6 +14,7 @@ class ThresholdObserver(IObserver):
             feed_id = data.get("feed_id")
             val = float(data.get("value"))
             dev = s.query(Device).filter(Device.feed_id==feed_id).first()
+            print(f"Device: {dev.name} - Value: {val}")
             if dev and val is not None:
                 if val < dev.min_value or val > dev.max_value:
                     user = s.query(User).filter(User.id == dev.user_id).first()
