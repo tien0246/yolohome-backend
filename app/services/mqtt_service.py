@@ -1,17 +1,10 @@
 from app.core.mqtt_manager import *
-import time
 class MQTTService:
     def __init__(self):
         self.client = get_mqtt_client()
     def start(self):
-        while True:
-            try:
-                self.client.connect()
-                self.client.loop_background()
-            except Exception as e:
-                print(f"Error connecting to MQTT broker: {e}")
-            time.sleep(10)
-
+        self.client.connect()
+        self.client.loop_background()
     def stop(self):
         self.client.disconnect()
         print("MQTT client disconnected")
