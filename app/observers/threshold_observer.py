@@ -21,7 +21,7 @@ class ThresholdObserver(IObserver):
                         rec.alert = True
                         s.commit()
                     user = s.query(User).filter(User.id == dev.user_id).first()
-                    if user and user.token:
+                    if user and user.expo_token:
                         self.notifier.send(
                             user.expo_token,
                             title=f"Alert: {dev.name}",
