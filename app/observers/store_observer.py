@@ -17,5 +17,7 @@ class StoreObserver(IObserver):
                 session.add(record)
                 session.commit()
                 StatusService().create_status_direct(device.id, StatusEnum.active)
+        except Exception as e:
+            print(f"Error in StoreObserver: {e}")
         finally:
             session.close()
