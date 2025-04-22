@@ -2,8 +2,10 @@ from app.observers.iobserver import IObserver
 from app.db.session import SessionLocal
 from app.models.device import Device
 from app.models.sensor_data import SensorData
-from app.services.status_service import StatusService
-from app.models.status import StatusEnum
+from app.models.user import User
+from app.services.notification_service import NotificationService
+# from app.services.status_service import StatusService
+# from app.models.status import StatusEnum
 
 class StoreObserver(IObserver):
     def update(self, data):
@@ -18,6 +20,15 @@ class StoreObserver(IObserver):
                 record = SensorData(device.id, val, (float(val) < device.min_value or float(val) > device.max_value))
                 session.add(record)
                 session.commit()
-                StatusService().create_status_direct(device.id, StatusEnum.active)
+                if val < device.min_value or val > device.max_value:
+                    user = session.query(User).filter(User.id == device.user_id).first()
+                    if user and user.expo_token:
+                        self.notifier.send(
+                            user.expo_token,
+                            title=f"Alert: {device.name}",
+                            body=f"Sensor {device.name} has exceeded the threshold at {val}",
+                            data={"device_id": device.id, "value": val}
+                        )
+                # StatusService().create_status_direct(device.id, StatusEnum.active)
         finally:
             session.close()
