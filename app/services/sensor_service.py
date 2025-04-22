@@ -1,7 +1,10 @@
 from app.db.session import SessionLocal
 from app.models.sensor_data import SensorData
+from app.models.device import Device
 from app.schemas.sensor_data_schema import SensorDataInSchema
 from app.core.mqtt_instance import mqtt_service
+from sqlalchemy import select
+from sqlalchemy.orm import joinedload
 
 class SensorService:
     def record_sensor_data(self, data: SensorDataInSchema, feed_id):
@@ -24,9 +27,20 @@ class SensorService:
         db.close()
         return recs
     
-    def get_by_time_range(self, device_id, start, end):
+
+    def get_alerts_for_user(self, user_id):
         db = SessionLocal()
-        q = db.query(SensorData).filter(SensorData.device_id==device_id, SensorData.timestamp>=start, SensorData.timestamp<=end).order_by(SensorData.timestamp.desc())
+        q = (
+            db.query(
+                SensorData.device_id,
+                Device.name,
+                SensorData.value,
+                SensorData.timestamp
+            )
+            .join(Device, SensorData.device_id == Device.id)
+            .filter(Device.user_id == user_id, SensorData.alert.is_(True))
+            .order_by(SensorData.timestamp.desc())
+        )
         recs = q.all()
         db.close()
         return recs
