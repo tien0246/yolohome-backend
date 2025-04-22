@@ -7,6 +7,7 @@ class MQTTService:
         self.client.loop_background()
     def stop(self):
         self.client.disconnect()
+        print("MQTT client disconnected")
     def publish(self, feed_id, data):
         with published_lock:
             published_internal.add((feed_id, str(data)))
