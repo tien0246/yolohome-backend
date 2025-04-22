@@ -10,8 +10,7 @@ class MQTTService:
                 self.client.loop_background()
             except Exception as e:
                 print(f"Error connecting to MQTT broker: {e}")
-                # Retry connection after a delay
-                time.sleep(5)
+            time.sleep(10)
 
     def stop(self):
         self.client.disconnect()
