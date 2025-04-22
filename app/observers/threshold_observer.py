@@ -16,10 +16,6 @@ class ThresholdObserver(IObserver):
             dev = s.query(Device).filter(Device.feed_id==feed_id).first()
             if dev and val is not None:
                 if val < dev.min_value or val > dev.max_value:
-                    rec = s.query(SensorData).filter(SensorData.device_id == dev.id).order_by(SensorData.timestamp.desc()).first()
-                    if rec:
-                        rec.alert = True
-                        s.commit()
                     user = s.query(User).filter(User.id == dev.user_id).first()
                     if user and user.expo_token:
                         self.notifier.send(
