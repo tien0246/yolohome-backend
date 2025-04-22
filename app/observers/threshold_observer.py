@@ -24,7 +24,5 @@ class ThresholdObserver(IObserver):
                             body=f"Sensor {dev.name} has exceeded the threshold at {val}",
                             data={"device_id": dev.id, "value": val}
                         )
-        except Exception as e:
-            print(f"Error in ThresholdObserver: {e}")
         finally:
             s.close()

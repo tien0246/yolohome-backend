@@ -18,5 +18,3 @@ class NotificationService:
                 user.expo_token = None
                 s.commit()
             s.close()
-        except Exception as e:
-            print(f"Error sending notification: {e}")
