@@ -9,6 +9,5 @@ adafruit-io
 python-dotenv
 setuptools
 python-multipart
-uvicorn[standard]
 bcrypt
 exponent_server_sdk
