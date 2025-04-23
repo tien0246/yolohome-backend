@@ -32,6 +32,7 @@ class StoreObserver(IObserver):
                             body=f"Sensor {device.name} has exceeded the threshold at {val}",
                             data={"device_id": device.id, "value": val}
                         )
+                        print(f"Notification sent to {user.email}")
                 # StatusService().create_status_direct(device.id, StatusEnum.active)
         finally:
             session.close()
