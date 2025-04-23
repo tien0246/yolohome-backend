@@ -1,3 +1,4 @@
+import threading
 from app.observers.iobserver import IObserver
 from app.db.session import SessionLocal
 from app.models.device import Device
@@ -26,12 +27,11 @@ class StoreObserver(IObserver):
                     user = session.query(User).filter(User.id == device.user_id).first()
                     if user and user.expo_token:
                         print(f"Sending notification to {user.email}")
-                        self.notifier.send(
-                            user.expo_token,
-                            title=f"Alert: {device.name}",
-                            body=f"Sensor {device.name} has exceeded the threshold at {val}",
-                            data={"device_id": device.id, "value": val}
-                        )
+                        threading.Thread(
+                            target=self.notifier.send,
+                            args=(user.expo_token, f"Alert: {device.name}", f"Sensor {device.name} has exceeded the threshold at {val}", {"device_id": device.id, "value": val}),
+                            daemon=True
+                        ).start()
                         print(f"Notification sent to {user.email}")
                 # StatusService().create_status_direct(device.id, StatusEnum.active)
         finally:
