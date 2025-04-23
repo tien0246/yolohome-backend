@@ -8,6 +8,8 @@ from app.services.notification_service import NotificationService
 # from app.models.status import StatusEnum
 
 class StoreObserver(IObserver):
+    def __init__(self):
+        self.notifier = NotificationService()
     def update(self, data):
         session = SessionLocal()
         try:
@@ -20,9 +22,10 @@ class StoreObserver(IObserver):
                 record = SensorData(device.id, val, (float(val) < device.min_value or float(val) > device.max_value))
                 session.add(record)
                 session.commit()
-                if val < device.min_value or val > device.max_value:
+                if float(val) < device.min_value or float(val) > device.max_value:
                     user = session.query(User).filter(User.id == device.user_id).first()
                     if user and user.expo_token:
+                        print(f"Sending notification to {user.email}")
                         self.notifier.send(
                             user.expo_token,
                             title=f"Alert: {device.name}",
