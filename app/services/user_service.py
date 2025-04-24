@@ -19,3 +19,13 @@ class UserService:
         usr = db.query(User).filter(User.email == email).first()
         db.close()
         return usr
+    
+    def update_expo_token(self, user_id, token):
+        db = SessionLocal()
+        usr = db.query(User).filter(User.id == user_id).first()
+        if usr:
+            usr.expo_token = token
+            db.commit()
+            db.refresh(usr)
+        db.close()
+        return usr

@@ -15,7 +15,6 @@ class Config(BaseSettings):
     jwt_secret: str = os.getenv("JWT_SECRET")
     jwt_algorithm: str = os.getenv("JWT_ALGORITHM")
     jwt_expire: int = int(os.getenv("JWT_EXPIRE"))
-    rabbitmq_url: str = os.getenv("RABBITMQ_URL")
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

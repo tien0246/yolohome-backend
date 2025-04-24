@@ -8,6 +8,7 @@ class User(Base):
     name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False, index=True)
     password = Column(String(255), nullable=False)
+    expo_token = Column(String(255), nullable=True)
     create_at = Column(TIMESTAMP, server_default=func.current_timestamp())
     update_at = Column(TIMESTAMP, server_default=func.current_timestamp(), onupdate=func.current_timestamp())
 

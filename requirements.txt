@@ -9,3 +9,5 @@ adafruit-io
 python-dotenv
 setuptools
 python-multipart
+bcrypt
+exponent_server_sdk

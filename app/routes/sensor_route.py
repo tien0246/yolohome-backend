@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from typing import List, Optional
 from datetime import datetime
 from app.schemas.sensor_data_schema import SensorDataInSchema, SensorDataOutSchema
+from app.schemas.alert_schema import AlertOutSchema
 from app.services.sensor_service import SensorService
 from app.services.device_service import DeviceService
 from app.services.auth_service import get_current_user
@@ -30,6 +31,12 @@ def get_sensors_in_time_range(device_id: str, start: int, end: Optional[int] = N
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Unauthorized")
     end_dt = datetime.fromtimestamp(end) if end else datetime.utcnow()
     return SensorService().get_by_time_range(device_id, datetime.fromtimestamp(start), end_dt)
+
+@router.get("/sensor/alerts", response_model=List[AlertOutSchema])
+def get_alerts(user=Depends(get_current_user)):
+    if not user:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Unauthorized")
+    return SensorService().get_alerts_for_user(user.id)
 
 @router.post("/sensor", response_model=SensorDataOutSchema)
 def create_sensor_data(data: SensorDataInSchema, user=Depends(get_current_user)):
